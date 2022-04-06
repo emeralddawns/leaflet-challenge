@@ -1,3 +1,13 @@
+config.ipynb
+config.py
+config.js
+config*
+
+References/
+
+
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
