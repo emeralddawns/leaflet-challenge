@@ -36,6 +36,8 @@ function createMap(earthquakes) {
         weight: .5,
         fillOpacity: 0.75,
         color: "gray",
+        // scale: ['white', 'green'],
+        // steps: 20,
         fillColor: getColor(earthquakes[i].geometry.coordinates[2]),
         radius: earthquakes[i].properties.mag * 20000 //(earthquakes[i].state.population)
       }).bindPopup(`<h2>${earthquakes[i].properties.place}: ${earthquakes[i].properties.mag}</h2>`)
