@@ -4,7 +4,6 @@ var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_mo
 
 // Perform a GET request to the query URL.
 d3.json(queryUrl).then(function (data) {
-  console.log(data.features);
   createMap(data.features);
 });
 
@@ -63,13 +62,53 @@ function createMap(earthquakes) {
   //tectonicLayer has to be created before the function that adds the data so that the variable can be read globally
   let tectonicLayer = new L.LayerGroup();
   
-  // Getting our GeoJSON data
-  d3.json("static/data/PB2002_plates.json").then(data => {
-    // Adding the retrieved data to the GeoJSON layer
-    L.geoJson(data).addTo(tectonicLayer);
+  // Getting our GeoJSON data to show the visible plates
+  d3.json("static/data/PB2002_boundaries.json").then(data => {
+    console.log(data);
+    
+    // Adding the retrieved and formatted data to the GeoJSON layer
+    L.geoJson(data, {
+      style: (feature) => {
+        return {
+          color: "#ff8b14",
+          fillColor: "white",
+          fillOpacity: 0,
+          weight: 1.75
+        };
+      }
+    }).addTo(tectonicLayer);
   }); 
 
-
+  //Adding hovertext - must use enclosed polygons
+  d3.json("static/data/PB2002_plates.json").then(data => {
+    console.log(data);
+    
+    // Adding the retrieved and formatted data to the GeoJSON layer
+    L.geoJson(data, {
+      style: (feature) => {
+        return {
+          color: "#ff8b14",
+          fillColor: "white",
+          fillOpacity: 0,
+          weight: 0
+        };
+      },
+      onEachFeature: (feature, layer) => {
+        layer.on({
+            click: (event) => {
+                myMap.fitBounds(event.target.getBounds());
+            },
+            mouseover: (event) => {
+                event.target.setStyle({color: "#99000d", weight: .5})
+            },
+            mouseout: (event) => {
+                event.target.setStyle({color: "#ff8b14", weight: 0})
+            }
+        })
+        layer.bindPopup( `<h3>Plate Name: ${feature.properties.PlateName}</h3>`);
+      }
+    }).addTo(tectonicLayer);
+  }); 
 
 
 
@@ -78,7 +117,8 @@ function createMap(earthquakes) {
 
   //Street Map base layer
   var street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      // noWrap: true
   });
 
   //Top Map base layer
