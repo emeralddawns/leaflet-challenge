@@ -45,7 +45,7 @@ function createMap(earthquakes) {
   // Loop through locations, and create the markers and the pop-ups.
   for (let i in earthquakes) {
 
-    //GEOJSON coordinates are backwards
+    //Make quakemarker layer - GEOJSON coordinates are backwards
     quakeMarkers.push(
       L.circle([earthquakes[i].geometry.coordinates[1], earthquakes[i].geometry.coordinates[0]], {
         stroke: true,
@@ -56,9 +56,23 @@ function createMap(earthquakes) {
         radius: earthquakes[i].properties.mag * 20000
       }).bindPopup(`<h2>${earthquakes[i].properties.place}: Magnitude ${earthquakes[i].properties.mag}, Depth: ${earthquakes[i].geometry.coordinates[2]}</h2>`)
     );
-  }
+  };
+    let quakeLayer = L.layerGroup(quakeMarkers);
+
+  //TECTONIC LAYER    
+  //tectonicLayer has to be created before the function that adds the data so that the variable can be read globally
+  let tectonicLayer = new L.LayerGroup();
   
-  let quakeLayer = L.layerGroup(quakeMarkers);
+  // Getting our GeoJSON data
+  d3.json("static/data/PB2002_plates.json").then(data => {
+    // Adding the retrieved data to the GeoJSON layer
+    L.geoJson(data).addTo(tectonicLayer);
+  }); 
+
+
+
+
+
 
   // Create the base layers.
 
@@ -80,7 +94,8 @@ function createMap(earthquakes) {
 
   // Creat an overlays object.
   var overlayMaps = {
-    Earthquakes: quakeLayer,
+    "Earthquakes": quakeLayer,
+    "Tectonic Plates": tectonicLayer,
   };
 
   // Create a default "landing" map 
@@ -117,4 +132,5 @@ function createMap(earthquakes) {
 
   // Create a layer control (top right) that contains our baseMaps and overlayMaps.
   L.control.layers(baseMaps, overlayMaps, {collapsed: true}).addTo(myMap);
+  // controlLayers.addOverlay(tectonicLayer, "Tectonic Plates");
 }
