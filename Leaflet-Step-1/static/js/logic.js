@@ -32,14 +32,11 @@ function getColor(input) {
     return color;
   };
 
-function chooseData() {
-  var input = document.getElementById('userInput');
-  var timeSpan = parseInt(input.value);
+// function chooseData() {
+//   var input = document.getElementById('userInput');
+//   var timeSpan = parseInt(input.value);
 
-  if(timeSpan == 7) {
-    alert('YOU ARE UNDER 20');
-  }
-}
+// }
 
 // MAKE THE MAP
 function createMap(earthquakes) {
@@ -86,7 +83,7 @@ function createMap(earthquakes) {
     Earthquakes: quakeLayer,
   };
 
-  // Create a new map and add the earthquake data to the layers.
+  // Create a default "landing" map 
   var myMap = L.map("map", {
     center: [
       37.09, -95.71
@@ -103,7 +100,7 @@ function createMap(earthquakes) {
     const labels = [];
 
     //Create legend title and min, max labels
-    div.innerHTML = `<h1>Earthquake Depth (km)</h1>` +  //title
+    div.innerHTML = `<h3>Earthquake Depth (km)</h3>` +  //title
       `<div class=\"labels\"><div class=\"min\">${depthLimits[0]} or less</div>` + //min
       `<div class=\"max\">${depthLimits[depthLimits.length - 1]}</div>` + //max
       `</div>`;
@@ -118,8 +115,6 @@ function createMap(earthquakes) {
   };
   legend.addTo(myMap);
 
-  // Create a layer control that contains our baseMaps.
-  // Be sure to add an overlay Layer that contains the earthquake GeoJSON.
-  L.control.layers(baseMaps, overlayMaps, {collapsed: false}).addTo(myMap);
-  //collapsed refers to the top right "pick layers" interface
+  // Create a layer control (top right) that contains our baseMaps and overlayMaps.
+  L.control.layers(baseMaps, overlayMaps, {collapsed: true}).addTo(myMap);
 }
