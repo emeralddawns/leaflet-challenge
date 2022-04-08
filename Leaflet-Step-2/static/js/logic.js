@@ -95,6 +95,9 @@ function createMap(earthquakes) {
       },
       onEachFeature: (feature, layer) => {
         layer.on({
+            'add': function(){
+              layer.bringToBack()
+            },
             click: (event) => {
                 myMap.fitBounds(event.target.getBounds());
             },
