@@ -20,13 +20,13 @@ function getColor(input) {
 
   //chroma.js returns a list of hex colors
   let colorScale = chroma.scale([startColor, endColor]).mode('lch').colors(depthLimits.length + 1);
-    for (let i = (depthLimits.length - 1); i >= 0; i--){
-      if (input >= depthLimits[i]) {
+    for (let i = 0; i < depthLimits.length; i++){
+      if (input < depthLimits[i]) {
         var color = colorScale[i];
         break;
-      } else if (input < depthLimits[i]){
+      } else if (input <= depthLimits[i]){
         var color = colorScale[i];
-        // break;
+        break;
       }
     };
     return color;
@@ -104,7 +104,7 @@ function createMap(earthquakes) {
 
     //Create legend title and min, max labels
     div.innerHTML = `<h1>Earthquake Depth (km)</h1>` +  //title
-      `<div class=\"labels\"><div class=\"min\"> >${depthLimits[0]}</div>` + //min
+      `<div class=\"labels\"><div class=\"min\">${depthLimits[0]} or less</div>` + //min
       `<div class=\"max\">${depthLimits[depthLimits.length - 1]}</div>` + //max
       `</div>`;
 
