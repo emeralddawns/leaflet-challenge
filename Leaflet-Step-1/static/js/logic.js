@@ -31,11 +31,6 @@ function getColor(input) {
     return color;
   };
 
-// function chooseData() {
-//   var input = document.getElementById('userInput');
-//   var timeSpan = parseInt(input.value);
-
-// }
 
 // MAKE THE MAP
 function createMap(earthquakes) {
@@ -49,7 +44,7 @@ function createMap(earthquakes) {
       L.circle([earthquakes[i].geometry.coordinates[1], earthquakes[i].geometry.coordinates[0]], {
         stroke: true,
         weight: .5,
-        fillOpacity: 1,
+        fillOpacity: .75,
         color: "gray",
         fillColor: getColor(earthquakes[i].geometry.coordinates[2]),
         radius: earthquakes[i].properties.mag * 20000
@@ -124,6 +119,21 @@ function createMap(earthquakes) {
       // noWrap: true
   });
 
+  var googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+});
+
+  var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+});
+
+  var googleTerrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+});
+
   //Top Map base layer
   var topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
     attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
@@ -132,7 +142,10 @@ function createMap(earthquakes) {
   // Create a baseMaps object.
   var baseMaps = {
     "Street Map": street,
-    "Topographic Map": topo
+    "Satellite (from Google)": googleSat,
+    "Satellite with Borders": googleHybrid, 
+    "Terrain (from Google)": googleTerrain,
+    "Topographic Map": topo, 
   };
 
   // Creat an overlays object.
