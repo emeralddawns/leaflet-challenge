@@ -18,7 +18,7 @@ function getColor(input) {
 
   //chroma.js returns a list of hex colors
   let colorScale = chroma.scale([startColor, endColor]).mode('lch').colors(depthLimits.length + 1);
-    for (let i = 0; i < depthLimits.length; i++){
+    for (let i in depthLimits){
       if (input < depthLimits[i]) {
         var color = colorScale[i];
         break;
@@ -29,7 +29,6 @@ function getColor(input) {
     };
     return color;
   };
-
 
 // MAKE THE MAP
 function createMap(earthquakes) {
@@ -62,7 +61,7 @@ function createMap(earthquakes) {
     
     // Adding the retrieved and formatted data to the GeoJSON layer
     L.geoJson(data, {
-      style: (feature) => {
+      style: () => {
         return {
           color: "#ff8b14",
           fillColor: "white",
@@ -73,13 +72,13 @@ function createMap(earthquakes) {
     }).addTo(tectonicLayer);
   }); 
 
-  //Adding hovertext - must use enclosed polygons
+  // Adding hovertext - must use enclosed polygons
   d3.json("static/data/PB2002_plates.json").then(data => {
     console.log(data);
     
     // Adding the retrieved and formatted data to the GeoJSON layer
     L.geoJson(data, {
-      style: (feature) => {
+      style: () => {
         return {
           color: "#ff8b14",
           fillColor: "white",
@@ -89,7 +88,7 @@ function createMap(earthquakes) {
       },
       onEachFeature: (feature, layer) => {
         layer.on({
-            'add': function(){
+            add: function(){
                 layer.bringToBack()
             },
             click: (event) => {
