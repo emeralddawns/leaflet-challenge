@@ -2,7 +2,7 @@
 This assignment consisted of using JavaScript, html, and Leaflet to visualize data.
 
 # What the code does (in general terms)
-The code uses GeoJSON information on earthquakes from [United States Geological Survey](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php) and tectonic plates from [GitHub](https://github.com/fraxen/tectonicplates) to create an interactive map.
+The code uses GeoJSON information on earthquakes from the [United States Geological Survey](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php) and tectonic plates from [GitHub](https://github.com/fraxen/tectonicplates) to create an interactive map.
 
 # What the code displays
 
