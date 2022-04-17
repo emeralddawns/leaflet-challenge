@@ -8,9 +8,9 @@ The code uses GeoJSON information on earthquakes from [United States Geological 
 
 The **logic.js** code uses leaflet and **chroma.js** , to create a map with the following:
     
-    1. Five (5) base maps from openstreetmaps and google.
+    1. Five (5) base maps from https://www.openstreetmap.org and google.
 
-    2. An overlay layer that maps earthquakes from the past 30 days. The size of the markers is dependent on the magnitude, and the color of the markers is dependent on their depth.  Popups provide information on the earthquake when clicked.
+    2. An overlay layer that maps earthquakes from the past 30 days. The size of each marker is dependent on the magnitude of the earthquake, and the color of each marker is dependent on its depth.  Popups provide information on the earthquake when clicked.
 
     3. An overlay layer the shows earth's tectonic plates. When clicked, a popup gives the name of the plate.
 
@@ -18,8 +18,7 @@ The **logic.js** code uses leaflet and **chroma.js** , to create a map with the 
 
 **index.html** and **and style.css** create and format the webpage that displays the map.
 
-
-A screenshots of the map can be seen below:
+Screenshots of the map can be seen below:
 ![platenames.png](platenames.png)
 
 ![earthquake.png](earthquake.png)
